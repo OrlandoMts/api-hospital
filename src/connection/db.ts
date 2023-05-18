@@ -1,7 +1,6 @@
 import { ConnectOptions, Connection, createConnection } from "mongoose";
-// import { env } from "node:process";
-import dotenv from "dotenv";
 
+import { DB_CNN } from "../base/config/index";
 import { MSG_CONNECTION_FAILED, MSG_CONNECTION_SUCCES } from "../messages/msgs";
 
 export class DatabaseConnection {
@@ -10,13 +9,11 @@ export class DatabaseConnection {
 		useUnifiedTopology: true,
 		useNewUrlParser: true,
 	} as ConnectOptions;
-	private _dotenv: dotenv.DotenvConfigOutput;
 
-	public mongoDB1!: Connection;
+	public mongoUserDB1!: Connection;
 
 	constructor() {
-		this._dotenv = dotenv.config();
-		this.mongoDB1 = this.connect(process?.env.DB_CNN || "none");
+		this.mongoUserDB1 = this.connect(DB_CNN || "none");
 	}
 
 	public static get instance(): DatabaseConnection {
@@ -29,7 +26,6 @@ export class DatabaseConnection {
 			console.log(MSG_CONNECTION_SUCCES);
 			return mongoCON;
 		} catch (error) {
-			console.log(error);
 			throw new Error(MSG_CONNECTION_FAILED);
 		}
 	}

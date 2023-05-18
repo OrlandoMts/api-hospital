@@ -42,7 +42,7 @@ UserSchema.method("toJSON", function () {
 	return obj;
 });
 
-export const UserMod = DatabaseConnection.instance.mongoDB1.model<UserItf>(
+export const UserMod = DatabaseConnection.instance.mongoUserDB1.model<UserItf>(
 	"user",
 	UserSchema,
 	"user"

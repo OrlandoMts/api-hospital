@@ -3,8 +3,8 @@ import express, { Application, Router } from "express";
 import http, { createServer } from "http";
 
 import cors from "cors";
-import dotenv from "dotenv";
 
+import { PORT } from "../base/config";
 import { DatabaseConnection } from "../connection/db";
 import { MSG_RUN_ON_PORT } from "../messages/msgs";
 import AppRouter from "./index.routes";
@@ -14,10 +14,8 @@ export class AppServer {
 	private _app: Application;
 	private _router: Router;
 	private _httpSrv: http.Server;
-	private _dotenv: dotenv.DotenvConfigOutput;
 
 	constructor() {
-		this._dotenv = dotenv.config();
 		this._app = express();
 		this._httpSrv = createServer(this._app);
 		this._router = Router();
@@ -46,8 +44,8 @@ export class AppServer {
 	}
 
 	private listen(): void {
-		this._httpSrv.listen(process.env.PORT, () => {
-			console.log(`${MSG_RUN_ON_PORT} ${process.env.PORT}`);
+		this._httpSrv.listen(PORT, () => {
+			console.log(`${MSG_RUN_ON_PORT} ${PORT}`);
 		});
 	}
 
