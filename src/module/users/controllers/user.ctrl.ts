@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
+import { Document, Model } from "mongoose";
+import UserMod from "../models/user.mdl";
 
 export class UserCrl {
 	private static _instance: UserCrl;
+	private _userMod: Model<Document> | any = UserMod;
 
 	constructor() {}
 
@@ -9,13 +12,26 @@ export class UserCrl {
 		return this._instance || (this._instance = new this());
 	}
 
-	public getAll(req: Request, res: Response) {
+	public async getAll(req: Request, res: Response) {
+		const users = await this._userMod.find();
 		res.json({
 			ok: true,
-			msg: "hola mundo",
+			msg: "Obteniendo los usuarios",
 			data: {
-				usuarios: [{ nombre: "orlando montes" }, { nombre: "daniel montes" }],
+				users,
 			},
+		});
+	}
+
+	public async create(req: Request, res: Response) {
+		const { name, email, password } = req.body;
+
+		const usuario = await this._userMod.create(req.body);
+
+		res.json({
+			ok: true,
+			msg: "Usuario creado",
+			usuario,
 		});
 	}
 }

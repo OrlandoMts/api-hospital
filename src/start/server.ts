@@ -1,3 +1,4 @@
+import bodyParser from "body-parser";
 import express, { Application, Router } from "express";
 import http, { createServer } from "http";
 
@@ -27,6 +28,15 @@ export class AppServer {
 	}
 
 	private middlewares(): void {
+		this._app.use(express.json({ limit: "900mb" }));
+		this._app.use(bodyParser.json({ limit: "900mb" }));
+		this._app.use(
+			bodyParser.urlencoded({
+				limit: "900mb",
+				extended: true,
+				parameterLimit: 50000,
+			})
+		);
 		this._app.use(cors());
 	}
 

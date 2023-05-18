@@ -1,4 +1,5 @@
-import { Schema, model } from "mongoose";
+import { Schema } from "mongoose";
+import { DatabaseConnection } from "../../../connection/db";
 import { UserItf } from "../interface/user.itf";
 
 const UserSchema: Schema = new Schema<UserItf>(
@@ -36,4 +37,15 @@ const UserSchema: Schema = new Schema<UserItf>(
 	}
 );
 
-module.exports = model("user", UserSchema, "user");
+UserSchema.method("toJSON", function () {
+	const { __v, status, ...obj } = this.toObject();
+	return obj;
+});
+
+export const UserMod = DatabaseConnection.instance.mongoDB1.model<UserItf>(
+	"user",
+	UserSchema,
+	"user"
+);
+
+export default UserMod;

@@ -1,5 +1,6 @@
 import { ConnectOptions, Connection, createConnection } from "mongoose";
-import { env } from "node:process";
+// import { env } from "node:process";
+import dotenv from "dotenv";
 
 import { MSG_CONNECTION_FAILED, MSG_CONNECTION_SUCCES } from "../messages/msgs";
 
@@ -9,9 +10,13 @@ export class DatabaseConnection {
 		useUnifiedTopology: true,
 		useNewUrlParser: true,
 	} as ConnectOptions;
+	private _dotenv: dotenv.DotenvConfigOutput;
+
+	public mongoDB1!: Connection;
 
 	constructor() {
-		this.connect(env?.DB_CNN || "");
+		this._dotenv = dotenv.config();
+		this.mongoDB1 = this.connect(process?.env.DB_CNN || "none");
 	}
 
 	public static get instance(): DatabaseConnection {

@@ -20,6 +20,10 @@ export class UserRouter {
 			this._userCrl.getAll(req, res)
 		);
 
+		this.router.post("/", (req: Request, res: Response) =>
+			this._userCrl.create(req, res)
+		);
+
 		return this.router;
 	}
 }
