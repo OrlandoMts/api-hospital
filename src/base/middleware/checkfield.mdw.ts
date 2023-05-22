@@ -2,7 +2,10 @@ import { NextFunction, Request, Response } from "express";
 import { Result, validationResult } from "express-validator";
 import { Document, Model } from "mongoose";
 
-import { MSG_VALIDATION_MDW_EXIST_EMAIL } from "@messages/index";
+import {
+	MSG_NOT_EXIST_ENTITY,
+	MSG_VALIDATION_MDW_EXIST_EMAIL,
+} from "@messages/index";
 import { HttpApiResponse } from "../helper";
 
 export const checksFields = (
@@ -28,6 +31,15 @@ export const existEmail = async (
 		if (exist) throw new Error(MSG_VALIDATION_MDW_EXIST_EMAIL);
 	} catch (error: any) {
 		throw new Error(error?.message || MSG_VALIDATION_MDW_EXIST_EMAIL);
+	}
+};
+
+export const existEntity = async (id: string, model: Model<Document> | any) => {
+	try {
+		const exist = await model.findOne({ _id: id, status: true });
+		if (!exist) throw new Error(MSG_NOT_EXIST_ENTITY);
+	} catch (error: any) {
+		throw new Error(error?.message || MSG_NOT_EXIST_ENTITY);
 	}
 };
 

@@ -1,5 +1,6 @@
 import { Document, Model } from "mongoose";
 
+import { MSG_ERR_UPDATE } from "@messages/msgs";
 import { MSG_ERR_SERV } from "../../messages";
 import { HTTPPaginationItf } from "../interface";
 
@@ -28,6 +29,22 @@ export class BaseRsv<T> {
 			return data;
 		} catch (error: any) {
 			throw new Error(MSG_ERR_SERV(error));
+		}
+	}
+
+	public async get(id: string) {
+		try {
+			return await this._model.findById(id);
+		} catch (error: any) {
+			throw new Error(error);
+		}
+	}
+
+	public async update(id: string, entity: T): Promise<T> {
+		try {
+			return await this._model.findByIdAndUpdate(id, entity, { new: true });
+		} catch (error: any) {
+			throw new Error(MSG_ERR_UPDATE(error));
 		}
 	}
 }

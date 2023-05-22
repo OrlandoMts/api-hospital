@@ -38,7 +38,7 @@ const UserSchema: Schema = new Schema<UserItf>(
 );
 
 UserSchema.method("toJSON", function () {
-	const { __v, status, ...obj } = this.toObject();
+	const { __v, status, password, ...obj } = this.toObject();
 	return obj;
 });
 
