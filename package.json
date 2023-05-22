@@ -14,6 +14,8 @@
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
 		"express": "^4.18.2",
+		"express-validator": "^7.0.1",
+		"module-alias": "^2.2.2",
 		"mongoose": "^7.1.1"
 	},
 	"devDependencies": {
@@ -23,5 +25,10 @@
 		"nodemon": "^2.0.22",
 		"ts-node": "^10.9.1",
 		"typescript": "^5.0.4"
+	},
+	"_moduleAliases": {
+		"@srcBase": "src/base",
+		"@messages": "src/messages",
+		"@modUsers": "src/module/users"
 	}
 }

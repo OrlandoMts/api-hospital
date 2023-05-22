@@ -34,7 +34,7 @@ export class BaseCtrl<T> {
 			const data = await (this._srv as BaseSrv<T>).create(req.body);
 			return HttpApiResponse<T>(true, res, 200, MSG_USER_CREATED, data);
 		} catch (error: any) {
-			return HttpApiResponse<{}>(false, res, 200, MSG_ERR_SERV(error));
+			return HttpApiResponse<{}>(false, res, 400, MSG_ERR_SERV(error));
 		}
 	}
 }
