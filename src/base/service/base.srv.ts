@@ -35,6 +35,24 @@ export class BaseSrv<T> {
 			throw new Error(MSG_ERR_UPDATE(error));
 		}
 	}
+
+	public async inactive(id: string, entity: T): Promise<T> {
+		try {
+			if (!id) throw new Error(MSG_VALIDATION_ID_MONGO);
+			return await (this._rsv as BaseRsv<T>).update(id, entity);
+		} catch (error: any) {
+			throw new Error(MSG_ERR_UPDATE(error));
+		}
+	}
+
+	public async delete(id: string): Promise<T> {
+		try {
+			if (!id) throw new Error(MSG_VALIDATION_ID_MONGO);
+			return await (this._rsv as BaseRsv<T>).delete(id);
+		} catch (error: any) {
+			throw new Error(MSG_ERR_UPDATE(error));
+		}
+	}
 }
 
 export default BaseSrv;

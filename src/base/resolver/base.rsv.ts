@@ -47,6 +47,22 @@ export class BaseRsv<T> {
 			throw new Error(MSG_ERR_UPDATE(error));
 		}
 	}
+
+	public async inactive(id: string, entity: T): Promise<T> {
+		try {
+			return await this._model.findByIdAndUpdate(id, entity, { new: true });
+		} catch (error: any) {
+			throw new Error(MSG_ERR_UPDATE(error));
+		}
+	}
+
+	public async delete(id: string): Promise<T> {
+		try {
+			return await this._model.findByIdAndDelete(id, { new: true });
+		} catch (error: any) {
+			throw new Error(MSG_ERR_UPDATE(error));
+		}
+	}
 }
 
 export default BaseRsv;

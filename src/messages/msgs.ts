@@ -4,6 +4,7 @@ export const MSG_RUN_ON_PORT = "Aplicación ejecutandose en el puerto";
 
 export const MSG_USER_CREATED = "Usuario registrado";
 export const MSG_USER_UPDATED = "Usuario actualizado";
+export const MSG_USER_DELETED = "Usuario eliminado";
 export const MSG_USER_ALL = "Obteniendo los usuarios";
 
 export const MSG_ERR_SERV = (error: any) =>

@@ -39,6 +39,13 @@ export class UserMap {
 		body.role && (map.role = body.role.toUpperCase());
 		return map;
 	}
+
+	public async inactive(req: Request): Promise<UserItf> {
+		const { _id } = req.params;
+		const map: UserItf = await EntityUser(_id);
+		map.status = false;
+		return map;
+	}
 }
 
 export default UserMap;

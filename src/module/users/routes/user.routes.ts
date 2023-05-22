@@ -61,6 +61,27 @@ export class UserRouter {
 				this._userCrl.update(req, res, this._userMap.update(req))
 		);
 
+		this.router.delete(
+			"/:_id",
+			[
+				check("_id", MSG_VALIDATION_ID_MONGO).isMongoId(),
+				check("_id").custom((val) => existEntity(val, UserMod)),
+				checksFields,
+			],
+			(req: Request, res: Response) =>
+				this._userCrl.inactive(req, res, this._userMap.inactive(req))
+		);
+
+		this.router.delete(
+			"/delete/:_id",
+			[
+				check("_id", MSG_VALIDATION_ID_MONGO).isMongoId(),
+				check("_id").custom((val) => existEntity(val, UserMod)),
+				checksFields,
+			],
+			(req: Request, res: Response) => this._userCrl.delete(req, res)
+		);
+
 		return this.router;
 	}
 }
