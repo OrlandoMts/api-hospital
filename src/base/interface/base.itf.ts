@@ -5,10 +5,23 @@ export interface BaseRsvItf {
 	// update?: Function;
 	// inactive?: Function;
 	// delete?: Function;
-	// findOne?: Function;
+	findOne?: Function;
 	// findAll?: Function;
 	// findAllByQuery?: Function;
 	// getByKey?: Function;
 	// checkByKey?: Function;
 	// countByQuery?: Function;
+}
+
+export interface BasePopItf {
+	path: string;
+	match: { status: boolean };
+	select: string;
+	populate?: BasePopItf | Array<BasePopItf>;
+	model: any;
+	options: PopOptItf;
+}
+
+export interface PopOptItf {
+	strictPopulate: boolean;
 }

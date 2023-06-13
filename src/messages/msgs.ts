@@ -5,6 +5,7 @@ export const MSG_RUN_ON_PORT = "Aplicación ejecutandose en el puerto";
 export const MSG_USER_CREATED = "Usuario registrado";
 export const MSG_USER_UPDATED = "Usuario actualizado";
 export const MSG_USER_DELETED = "Usuario eliminado";
+export const MSG_GET_USER = "Obteniendo detalles del usuario";
 export const MSG_USER_ALL = "Obteniendo los usuarios";
 
 export const MSG_ERR_SERV = (error: any) =>
@@ -12,6 +13,9 @@ export const MSG_ERR_SERV = (error: any) =>
 
 export const MSG_ERR_UPDATE = (error: any) =>
 	error.message ? error.message : "¡Error al actualizar!";
+
+export const MSG_ERR_GET = (error: string) =>
+	error ? error : "¡Error al actualizar!";
 
 export const MSG_VALIDATION_ID_MONGO = "No es un id valido";
 
@@ -22,3 +26,7 @@ export const MSG_VALIDATION_MDW_EXIST_EMAIL = "Ingresa otro correo";
 export const MSG_VALIDATION_MDW_ROLE = "El role es requerido";
 
 export const MSG_NOT_EXIST_ENTITY = "El registro no existe";
+
+export const PFS_ID: string = "el identificador";
+export const MSG_TXT_ERR: Function = (error: any): string =>
+	error.message ? error.message : "¡Error, contacte al administrador!";

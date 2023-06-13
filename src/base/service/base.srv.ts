@@ -1,5 +1,5 @@
 import { MSG_ERR_SERV, MSG_VALIDATION_ID_MONGO } from "@messages/index";
-import { MSG_ERR_UPDATE } from "@messages/msgs";
+import { MSG_ERR_UPDATE, MSG_TXT_ERR, PFS_ID } from "@messages/msgs";
 import { HTTPPaginationItf } from "../interface";
 import { BaseRsvItf } from "../interface/base.itf";
 import { BaseRsv } from "../resolver/base.rsv";
@@ -51,6 +51,15 @@ export class BaseSrv<T> {
 			return await (this._rsv as BaseRsv<T>).delete(id);
 		} catch (error: any) {
 			throw new Error(MSG_ERR_UPDATE(error));
+		}
+	}
+
+	public async findOne(id: string, msgReq: string = PFS_ID): Promise<T> {
+		try {
+			if (!id) throw new Error(MSG_ERR_UPDATE(msgReq));
+			return await (this._rsv as BaseRsv<T>).findOne(id);
+		} catch (error: any) {
+			throw new Error(MSG_TXT_ERR(error));
 		}
 	}
 }

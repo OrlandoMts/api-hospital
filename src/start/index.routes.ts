@@ -1,4 +1,6 @@
 import { Router } from "express";
+
+import { LoginRoutes } from "../module/login/routes/index";
 import UserRouter from "../module/users/routes/user.routes";
 
 export class AppRouter {
@@ -15,6 +17,7 @@ export class AppRouter {
 
 	public setRouter(): Router {
 		this._appRouter.use("/users", UserRouter.instance.setRouter());
+		this._appRouter.use("/login", LoginRoutes.instance.setRouter());
 		return this._appRouter;
 	}
 }
