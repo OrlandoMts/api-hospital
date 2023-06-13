@@ -1,7 +1,11 @@
 import { Request, Response, Router } from "express";
 import { check } from "express-validator";
 
-import { checksFields, existEmail } from "@srcBase/middleware/index";
+import {
+	checksFields,
+	existEmail,
+	validateJWT,
+} from "@srcBase/middleware/index";
 
 import {
 	MSG_VALIDATION_ID_MONGO,
@@ -30,7 +34,7 @@ export class UserRouter {
 	}
 
 	public setRouter(): Router {
-		this.router.get("/", (req: Request, res: Response) =>
+		this.router.get("/", validateJWT, (req: Request, res: Response) =>
 			this._userCrl.getAll(req, res)
 		);
 
@@ -51,6 +55,7 @@ export class UserRouter {
 		this.router.put(
 			"/:_id",
 			[
+				validateJWT,
 				check("_id", MSG_VALIDATION_ID_MONGO).isMongoId(),
 				check("_id").custom((val) => existEntity(val, UserMod)),
 				check("name", MSG_VALIDATION_MDW_NAME).optional().notEmpty(),
@@ -64,6 +69,7 @@ export class UserRouter {
 		this.router.delete(
 			"/:_id",
 			[
+				validateJWT,
 				check("_id", MSG_VALIDATION_ID_MONGO).isMongoId(),
 				check("_id").custom((val) => existEntity(val, UserMod)),
 				checksFields,
@@ -75,6 +81,7 @@ export class UserRouter {
 		this.router.delete(
 			"/delete/:_id",
 			[
+				validateJWT,
 				check("_id", MSG_VALIDATION_ID_MONGO).isMongoId(),
 				check("_id").custom((val) => existEntity(val, UserMod)),
 				checksFields,

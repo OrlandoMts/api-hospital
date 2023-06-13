@@ -1,3 +1,5 @@
+export const MSG_TOKEN_REQ = "El token es requerido";
+export const MSG_TOKEN_INVALID = "El token no es valido";
 export const MSG_CONNECTION_SUCCES = "Conexión exitosa a la bd";
 export const MSG_CONNECTION_FAILED = "Error al conectarse a la bd";
 export const MSG_RUN_ON_PORT = "Aplicación ejecutandose en el puerto";
