@@ -22,7 +22,11 @@ export class BaseCtrl<T> {
 
 	public async getAll(req: Request, res: Response): Promise<Response> {
 		try {
-			const data = await (this._srv as BaseSrv<T>).getAll();
+			const { page, limit } = req.query;
+			const pageNum = page && page.toString() ? parseInt(page?.toString()) : 1;
+			const limitNum =
+				limit && limit.toString() ? parseInt(limit?.toString()) : 25;
+			const data = await (this._srv as BaseSrv<T>).getAll(pageNum, limitNum);
 			return HttpApiResponse<HTTPPaginationItf<T>>(
 				true,
 				res,

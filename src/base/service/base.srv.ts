@@ -11,9 +11,12 @@ export class BaseSrv<T> {
 		this._rsv = rsv;
 	}
 
-	public async getAll(): Promise<HTTPPaginationItf<T>> {
+	public async getAll(
+		pg: number = 1,
+		lm: number = 25
+	): Promise<HTTPPaginationItf<T>> {
 		try {
-			return await (this._rsv as BaseRsv<T>).getAll();
+			return await (this._rsv as BaseRsv<T>).getAll(pg, lm);
 		} catch (error: any) {
 			throw new Error(MSG_ERR_SERV(error));
 		}

@@ -22,12 +22,33 @@ export class BaseRsv<T> {
 		return this._popOp;
 	}
 
-	public async getAll(): Promise<HTTPPaginationItf<T>> {
+	public async getAll(
+		page: number = 1,
+		limit: number = 25
+	): Promise<HTTPPaginationItf<T>> {
 		try {
-			const data = await this._model
-				.find({ status: true })
-				.populate(this.getPopulate());
-			const total = await this._model.countDocuments({ status: true });
+			const querypage: number =
+				Math.ceil(parseInt(page.toString())) <= 1
+					? 1
+					: Math.ceil(parseInt(page.toString())) || 1;
+			const PN: number =
+				Math.ceil(parseInt(page.toString())) <= 1
+					? 0
+					: Math.ceil(parseInt(page.toString()) - 1) || 0;
+			const querylimit: number =
+				Math.ceil(parseInt(limit.toString())) < 1
+					? 25
+					: Math.ceil(parseInt(limit.toString())) || 25;
+
+			const [data, total] = await Promise.all([
+				this._model
+					.find({ status: true })
+					.populate(this.getPopulate())
+					.skip(querypage * PN)
+					.limit(querylimit),
+
+				this._model.count({ status: true }),
+			]);
 			return { data, total };
 		} catch (error: any) {
 			throw new Error(MSG_ERR_SERV(error));
