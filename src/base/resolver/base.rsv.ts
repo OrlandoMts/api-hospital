@@ -14,13 +14,19 @@ export class BaseRsv<T> {
 		this._name = name;
 	}
 
+	public setPopulate(populate: Array<BasePopItf> = []): void {
+		this._popOp = populate;
+	}
+
 	public getPopulate(): Array<BasePopItf> {
 		return this._popOp;
 	}
 
 	public async getAll(): Promise<HTTPPaginationItf<T>> {
 		try {
-			const data = await this._model.find({ status: true });
+			const data = await this._model
+				.find({ status: true })
+				.populate(this.getPopulate());
 			const total = await this._model.countDocuments({ status: true });
 			return { data, total };
 		} catch (error: any) {

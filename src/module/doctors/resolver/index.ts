@@ -1,1 +1,1 @@
-export { DoctorRsv } from "./hospital.rsv";
+export { DoctorRsv } from "./doctor.rsv";

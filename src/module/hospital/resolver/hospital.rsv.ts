@@ -1,5 +1,5 @@
 import { HospitalItf } from "@modHospital/interface";
-import HospitalMod from "@modHospital/models/hospital.mdl";
+import HospitalMod, { HospitalPop } from "@modHospital/models/hospital.mdl";
 import { BaseRsv } from "@srcBase/resolver";
 
 export class HospitalRsv extends BaseRsv<HospitalItf> {
@@ -7,6 +7,7 @@ export class HospitalRsv extends BaseRsv<HospitalItf> {
 
 	constructor() {
 		super(HospitalMod, "HospitalMod");
+		this.setPopulate(HospitalPop);
 	}
 
 	public static get instance(): HospitalRsv {
