@@ -14,7 +14,7 @@ export class HospitalCls implements HospitalItf {
 	updated?: Date = new Date();
 }
 
-export async function EntityHospital(
+export async function Entity(
 	id: string = "",
 	hospital: HospitalItf | undefined = undefined
 ): Promise<HospitalItf> {

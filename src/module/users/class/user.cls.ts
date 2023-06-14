@@ -15,7 +15,7 @@ export class UserCls implements UserItf {
 	updated?: Date = new Date();
 }
 
-export async function EntityUser(
+export async function Entity(
 	id: string = "",
 	user: UserItf | undefined = undefined
 ): Promise<UserItf> {

@@ -1,1 +1,1 @@
-export { EntityUser, UserCls } from "./user.cls";
+export { Entity, UserCls } from "./user.cls";

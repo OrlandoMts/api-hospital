@@ -20,8 +20,8 @@ export class BaseRsv<T> {
 
 	public async getAll(): Promise<HTTPPaginationItf<T>> {
 		try {
-			const data = await this._model.find();
-			const total = await this._model.countDocuments();
+			const data = await this._model.find({ status: true });
+			const total = await this._model.countDocuments({ status: true });
 			return { data, total };
 		} catch (error: any) {
 			throw new Error(MSG_ERR_SERV(error));

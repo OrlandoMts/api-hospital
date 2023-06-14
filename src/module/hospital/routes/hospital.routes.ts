@@ -1,8 +1,13 @@
 import { Request, Response, Router } from "express";
 
-import { MSG_VALIDATION_MDW_NAME } from "@messages/msgs";
+import {
+	MSG_VALIDATION_ID_MONGO,
+	MSG_VALIDATION_MDW_NAME,
+} from "@messages/msgs";
 import { HospitalCtrl } from "@modHospital/controllers";
 import { HospitalMap } from "@modHospital/mapping";
+import HospitalMod from "@modHospital/models/hospital.mdl";
+import { existEntity } from "@srcBase/middleware/checkfield.mdw";
 import { checksFields, validateJWT } from "@srcBase/middleware/index";
 import { check } from "express-validator";
 
@@ -40,32 +45,17 @@ export class HospitalRoutes {
 				this._hospitalCtrl.create(req, res, this._hospitalMap.create(req))
 		);
 
-		/* this.router.post(
-			"/",
-			[
-				check("name", MSG_VALIDATION_MDW_NAME).notEmpty(),
-				check("email", MSG_VALIDATION_MDW_EMAIL).notEmpty(),
-				check("email", MSG_VALIDATION_MDW_EMAIL).isEmail(),
-				check("email").custom((val) => existEmail(val, UserMod)),
-				check("password", MSG_VALIDATION_MDW_PASSWORD).notEmpty(),
-				checksFields,
-			],
-			(req: Request, res: Response) =>
-				this._userCrl.create(req, res, this._userMap.create(req))
-		);
-
 		this.router.put(
 			"/:_id",
 			[
 				validateJWT,
 				check("_id", MSG_VALIDATION_ID_MONGO).isMongoId(),
-				check("_id").custom((val) => existEntity(val, UserMod)),
+				check("_id").custom((val) => existEntity(val, HospitalMod)),
 				check("name", MSG_VALIDATION_MDW_NAME).optional().notEmpty(),
-				check("role", MSG_VALIDATION_MDW_ROLE).optional().notEmpty(),
 				checksFields,
 			],
 			(req: Request, res: Response) =>
-				this._userCrl.update(req, res, this._userMap.update(req))
+				this._hospitalCtrl.update(req, res, this._hospitalMap.update(req))
 		);
 
 		this.router.delete(
@@ -73,23 +63,12 @@ export class HospitalRoutes {
 			[
 				validateJWT,
 				check("_id", MSG_VALIDATION_ID_MONGO).isMongoId(),
-				check("_id").custom((val) => existEntity(val, UserMod)),
+				check("_id").custom((val) => existEntity(val, HospitalMod)),
 				checksFields,
 			],
 			(req: Request, res: Response) =>
-				this._userCrl.inactive(req, res, this._userMap.inactive(req))
+				this._hospitalCtrl.inactive(req, res, this._hospitalMap.inactive(req))
 		);
-
-		this.router.delete(
-			"/delete/:_id",
-			[
-				validateJWT,
-				check("_id", MSG_VALIDATION_ID_MONGO).isMongoId(),
-				check("_id").custom((val) => existEntity(val, UserMod)),
-				checksFields,
-			],
-			(req: Request, res: Response) => this._userCrl.delete(req, res)
-		); */
 
 		return this.router;
 	}

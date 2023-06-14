@@ -1,1 +1,1 @@
-export { EntityHospital } from "./hospital.cls";
+export { Entity } from "./hospital.cls";

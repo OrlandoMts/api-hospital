@@ -1,13 +1,16 @@
 import { genSaltSync, hashSync } from "bcrypt";
 import { Request } from "express";
 
-import { EntityUser } from "@modUsers/class/index";
+import { Entity } from "@modUsers/class/index";
 import { UserItf } from "@modUsers/interface";
+import { BaseMap } from "@srcBase/mapping";
 
-export class UserMap {
+export class UserMap extends BaseMap<UserItf> {
 	private static _instance: UserMap;
 
-	constructor() {}
+	constructor() {
+		super(Entity);
+	}
 
 	public static get instance(): UserMap {
 		return this._instance || (this._instance = new this());
@@ -15,7 +18,7 @@ export class UserMap {
 
 	public async create(req: Request): Promise<UserItf> {
 		const { _id, status, ...body } = req.body;
-		const map: UserItf = await EntityUser();
+		const map: UserItf = await Entity();
 
 		const salt = genSaltSync(10);
 
@@ -34,16 +37,9 @@ export class UserMap {
 	public async update(req: Request): Promise<UserItf> {
 		const { _id } = req.params;
 		const { status, google, email, ...body } = req.body;
-		const map: UserItf = await EntityUser(_id);
+		const map: UserItf = await Entity(_id);
 		body.name && (map.name = body.name);
 		body.role && (map.role = body.role.toUpperCase());
-		return map;
-	}
-
-	public async inactive(req: Request): Promise<UserItf> {
-		const { _id } = req.params;
-		const map: UserItf = await EntityUser(_id);
-		map.status = false;
 		return map;
 	}
 }
