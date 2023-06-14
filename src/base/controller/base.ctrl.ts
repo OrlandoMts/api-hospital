@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 
+import { MSG_ERR_SERV } from "@messages/index";
 import {
-	MSG_ERR_SERV,
-	MSG_USER_ALL,
-	MSG_USER_CREATED,
-	MSG_USER_UPDATED,
-} from "@messages/index";
-import { MSG_ERR_UPDATE, MSG_USER_DELETED } from "@messages/msgs";
+	MSG_CREATE,
+	MSG_DELETE,
+	MSG_ERR_UPDATE,
+	MSG_GET_ALL,
+	MSG_UPDATE,
+} from "@messages/msgs";
 import { HttpApiResponse } from "../helper";
 import { HTTPPaginationItf } from "../interface";
 import { BaseRsvItf } from "../interface/base.itf";
@@ -26,7 +27,7 @@ export class BaseCtrl<T> {
 				true,
 				res,
 				200,
-				MSG_USER_ALL,
+				MSG_GET_ALL,
 				data
 			);
 		} catch (error: any) {
@@ -38,7 +39,7 @@ export class BaseCtrl<T> {
 		try {
 			const body = await map;
 			const data = await (this._srv as BaseSrv<T>).create(body);
-			return HttpApiResponse<T>(true, res, 200, MSG_USER_CREATED, data);
+			return HttpApiResponse<T>(true, res, 200, MSG_CREATE, data);
 		} catch (error: any) {
 			return HttpApiResponse<{}>(false, res, 400, MSG_ERR_SERV(error));
 		}
@@ -49,7 +50,7 @@ export class BaseCtrl<T> {
 			const body = await map;
 			const { _id } = body;
 			const data = await (this._srv as BaseSrv<T>).update(_id, body);
-			return HttpApiResponse<T>(true, res, 200, MSG_USER_UPDATED, data);
+			return HttpApiResponse<T>(true, res, 200, MSG_UPDATE, data);
 		} catch (error: any) {
 			return HttpApiResponse<{}>(false, res, 200, MSG_ERR_UPDATE(error));
 		}
@@ -59,7 +60,7 @@ export class BaseCtrl<T> {
 		try {
 			const { _id } = req.params;
 			const data = await (this._srv as BaseSrv<T>).delete(_id);
-			return HttpApiResponse<T>(true, res, 200, MSG_USER_DELETED, data);
+			return HttpApiResponse<T>(true, res, 200, MSG_DELETE, data);
 		} catch (error: any) {
 			return HttpApiResponse<{}>(false, res, 500, MSG_ERR_UPDATE(error));
 		}
@@ -70,7 +71,7 @@ export class BaseCtrl<T> {
 			const body = await map;
 			const { _id } = body;
 			const data = await (this._srv as BaseSrv<T>).inactive(_id, body);
-			return HttpApiResponse<T>(true, res, 200, MSG_USER_UPDATED, data);
+			return HttpApiResponse<T>(true, res, 200, MSG_DELETE, data);
 		} catch (error: any) {
 			return HttpApiResponse<{}>(false, res, 200, MSG_ERR_UPDATE(error));
 		}

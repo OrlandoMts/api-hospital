@@ -1,5 +1,6 @@
 import { Router } from "express";
 
+import { HospitalRoutes } from "../module/hospital/routes/index";
 import { LoginRoutes } from "../module/login/routes/index";
 import UserRouter from "../module/users/routes/user.routes";
 
@@ -18,6 +19,7 @@ export class AppRouter {
 	public setRouter(): Router {
 		this._appRouter.use("/users", UserRouter.instance.setRouter());
 		this._appRouter.use("/login", LoginRoutes.instance.setRouter());
+		this._appRouter.use("/hospital", HospitalRoutes.instance.setRouter());
 		return this._appRouter;
 	}
 }

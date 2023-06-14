@@ -4,6 +4,11 @@ export const MSG_CONNECTION_SUCCES = "Conexión exitosa a la bd";
 export const MSG_CONNECTION_FAILED = "Error al conectarse a la bd";
 export const MSG_RUN_ON_PORT = "Aplicación ejecutandose en el puerto";
 
+export const MSG_GET_ALL = "Obteniendo los detalles";
+export const MSG_CREATE = "Registro creado";
+export const MSG_UPDATE = "Registro actualizado";
+export const MSG_DELETE = "Registro eliminado";
+
 export const MSG_USER_CREATED = "Usuario registrado";
 export const MSG_USER_UPDATED = "Usuario actualizado";
 export const MSG_USER_DELETED = "Usuario eliminado";

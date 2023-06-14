@@ -12,10 +12,12 @@ export class DatabaseConnection {
 
 	public mongoUserDB1!: Connection;
 	public mongoUserDB2!: Connection;
+	public mongoUserDB3!: Connection;
 
 	constructor() {
 		this.mongoUserDB1 = this.connect(DB_CNN || "none");
 		this.mongoUserDB2 = this.connect(DB_CNN || "none");
+		this.mongoUserDB3 = this.connect(DB_CNN || "none");
 	}
 
 	public static get instance(): DatabaseConnection {
