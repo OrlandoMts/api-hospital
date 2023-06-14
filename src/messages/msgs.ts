@@ -24,7 +24,7 @@ export const MSG_ERR_UPDATE = (error: any) =>
 export const MSG_ERR_GET = (error: string) =>
 	error ? error : "¡Error al actualizar!";
 
-export const MSG_VALIDATION_ID_MONGO = "No es un id valido";
+export const MSG_VALIDATION_ID_MONGO = "No es un mongoid valido";
 
 export const MSG_VALIDATION_MDW_NAME = "El nombre es requerido";
 export const MSG_VALIDATION_MDW_EMAIL = "El correo es requerido";

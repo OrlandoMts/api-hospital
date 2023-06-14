@@ -36,6 +36,7 @@
 		"@srcBase": "src/base",
 		"@messages": "src/messages",
 		"@modUsers": "src/module/users",
-		"@modHospital": "src/module/hospital"
+		"@modHospital": "src/module/hospital",
+		"@modDoctor": "src/module/doctors"
 	}
 }
