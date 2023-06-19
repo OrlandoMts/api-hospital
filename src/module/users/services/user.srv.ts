@@ -19,8 +19,11 @@ export class UserSrv extends BaseSrv<UserItf> {
 
 	public override async create(entity: UserItf): Promise<any> {
 		try {
-			const user = await (this._userRsv as BaseRsv<UserItf>).create(entity);
-			const token = await genJwt(user._id as string);
+			const user: UserItf = await (this._userRsv as BaseRsv<UserItf>).create(
+				entity
+			);
+			const roles: Array<string> = [...user.role];
+			const token = await genJwt(user._id as string, roles);
 
 			return {
 				data: user,

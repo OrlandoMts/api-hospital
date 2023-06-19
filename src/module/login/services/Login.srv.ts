@@ -25,6 +25,7 @@ export class LoginSrv extends BaseSrv<LoginItf> {
 			const { password, email } = req.body;
 
 			const user = await this._userRsv.findUserByEmail(email);
+			const roles: Array<string> = [...user.role];
 			if (user === null) {
 				return HttpApiResponse<{}>(
 					false,
@@ -42,7 +43,7 @@ export class LoginSrv extends BaseSrv<LoginItf> {
 					MSG_ERR_GET("La contraseña y/o correo son incorrectos")
 				);
 			} else {
-				const token = await genJwt(user._id as string);
+				const token = await genJwt(user._id as string, roles);
 				return HttpApiResponse<string>(true, res, 200, MSG_GET_USER, token);
 			}
 		} catch (error: any) {

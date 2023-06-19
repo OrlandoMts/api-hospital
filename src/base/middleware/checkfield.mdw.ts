@@ -4,6 +4,7 @@ import { Document, Model } from "mongoose";
 
 import {
 	MSG_NOT_EXIST_ENTITY,
+	MSG_NOT_PERMISSION,
 	MSG_VALIDATION_MDW_EXIST_EMAIL,
 } from "@messages/index";
 import { HttpApiResponse } from "../helper";
@@ -40,6 +41,25 @@ export const existEntity = async (id: string, model: Model<Document> | any) => {
 		if (!exist) throw new Error(MSG_NOT_EXIST_ENTITY);
 	} catch (error: any) {
 		throw new Error(error?.message || MSG_NOT_EXIST_ENTITY);
+	}
+};
+
+// TODO: recibir los roles desde el token, para poder verificar
+export const checkRoles = (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+	...rolesAllow: Array<string>
+) => {
+	try {
+		const { roles } = req as any;
+		const isAllow = roles.some((r: string) => rolesAllow.includes(r));
+		if (!isAllow) {
+			return HttpApiResponse<{}>(false, res, 401, MSG_NOT_PERMISSION);
+		}
+		next();
+	} catch (error: any) {
+		throw new Error(error?.message || MSG_NOT_PERMISSION);
 	}
 };
 

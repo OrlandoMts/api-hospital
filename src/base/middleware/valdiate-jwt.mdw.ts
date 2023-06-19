@@ -9,6 +9,7 @@ type JwtPayload = {
 	uid: string;
 	iat: number;
 	exp: number;
+	roles: Array<string>;
 };
 
 export const validateJWT = (
@@ -19,8 +20,12 @@ export const validateJWT = (
 	const token = req.headers.authorization?.split(" ")[1] || undefined;
 	if (!token) return HttpApiResponse<{}>(false, res, 401, MSG_TOKEN_REQ);
 	try {
-		const { uid } = jwt.verify(token, SECRET_JWT as string) as JwtPayload;
+		const { uid, roles } = jwt.verify(
+			token,
+			SECRET_JWT as string
+		) as JwtPayload;
 		(req as any).uid = uid;
+		(req as any).roles = roles;
 		next();
 	} catch (error) {
 		return HttpApiResponse<{}>(false, res, 401, MSG_TOKEN_INVALID);

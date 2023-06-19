@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 export interface BaseRsvItf {
 	// get?: Function;
 	getAll: Function;
@@ -24,4 +26,11 @@ export interface BasePopItf {
 
 export interface PopOptItf {
 	strictPopulate: boolean;
+}
+
+export interface BaseEntityItf {
+	_id?: string | Types.ObjectId;
+	status?: boolean;
+	created?: Date;
+	updated?: Date;
 }

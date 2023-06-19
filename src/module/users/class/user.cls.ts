@@ -1,5 +1,6 @@
 import { UserItf } from "@modUsers/interface";
 import { UserRsv } from "@modUsers/resolver";
+import { ROLES } from "@srcBase/secure";
 import { Types } from "mongoose";
 
 export class UserCls implements UserItf {
@@ -8,7 +9,7 @@ export class UserCls implements UserItf {
 	email: string = "";
 	password: string = "";
 	img: string = "";
-	role: string = "";
+	role: Array<ROLES> = [];
 	google: boolean = false;
 	status?: boolean = true;
 	created?: Date = new Date();
@@ -29,7 +30,7 @@ export async function Entity(
 		map.email = dt && dt.email ? dt.email : "";
 		map.password = dt && dt.password ? dt.password : "";
 		map.img = dt && dt.img ? dt.img : "";
-		map.role = dt && dt.role ? dt.role : "ROLE_USER_NEW";
+		map.role = dt && dt.role ? [...dt.role] : [ROLES.NEW_USER];
 		map.google =
 			dt && dt.google && dt.google.toString() == "false" ? true : false;
 		map.status =

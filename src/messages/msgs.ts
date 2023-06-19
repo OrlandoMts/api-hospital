@@ -33,6 +33,7 @@ export const MSG_VALIDATION_MDW_EXIST_EMAIL = "Ingresa otro correo";
 export const MSG_VALIDATION_MDW_ROLE = "El role es requerido";
 
 export const MSG_NOT_EXIST_ENTITY = "El registro no existe";
+export const MSG_NOT_PERMISSION = "Acción no permitida";
 
 export const PFS_ID: string = "el identificador";
 export const MSG_TXT_ERR: Function = (error: any): string =>

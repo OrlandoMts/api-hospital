@@ -1,3 +1,4 @@
+import { ROLES } from "@srcBase/secure";
 import { Schema } from "mongoose";
 import { DatabaseConnection } from "../../../connection/db";
 import { UserItf } from "../interface/user.itf";
@@ -20,11 +21,14 @@ const UserSchema: Schema = new Schema<UserItf>(
 		img: {
 			type: String,
 		},
-		role: {
-			type: String,
-			required: true,
-			default: "ROLE_USER_NEW",
-		},
+		role: [
+			{
+				type: String,
+				required: true,
+				default: ROLES.NEW_USER,
+				enum: Object.values(ROLES),
+			},
+		],
 		google: {
 			type: Boolean,
 			default: false,

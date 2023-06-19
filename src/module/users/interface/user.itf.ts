@@ -1,14 +1,11 @@
-import { Types } from "mongoose";
+import { BaseEntityItf } from "@srcBase/interface";
+import { ROLES } from "@srcBase/secure";
 
-export interface UserItf {
-	_id?: string | Types.ObjectId;
+export interface UserItf extends BaseEntityItf {
 	name: string;
 	email: string;
 	password: string;
 	img: string;
-	role: string;
+	role: Array<ROLES>;
 	google: boolean;
-	status?: boolean;
-	created?: Date;
-	updated?: Date;
 }

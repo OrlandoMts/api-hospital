@@ -4,6 +4,7 @@ import { Request } from "express";
 import { Entity } from "@modUsers/class/index";
 import { UserItf } from "@modUsers/interface";
 import { BaseMap } from "@srcBase/mapping";
+import { ROLES } from "@srcBase/secure";
 
 export class UserMap extends BaseMap<UserItf> {
 	private static _instance: UserMap;
@@ -37,10 +38,24 @@ export class UserMap extends BaseMap<UserItf> {
 	public async update(req: Request): Promise<UserItf> {
 		const { _id } = req.params;
 		const { status, google, email, ...body } = req.body;
+		const role = body.role.toUpperCase();
+		const rolesAllow = Object.values(ROLES);
 		const map: UserItf = await Entity(_id);
-		body.name && (map.name = body.name);
-		body.role && (map.role = body.role.toUpperCase());
-		return map;
+		// 1. Verifica si el role del body existe en el enum, sino lo inserta con ROLE.NEW_USER
+		// 2. Valido que no se duplique el rol
+		if (rolesAllow.includes(role)) {
+			if (map.role.includes(role)) {
+				body.name && (map.name = body.name);
+				return map;
+			}
+			body.name && (map.name = body.name);
+			body.role && map.role.push(role);
+			return map;
+		} else {
+			body.name && (map.name = body.name);
+			body.role && map.role.push(ROLES.NEW_USER);
+			return map;
+		}
 	}
 }
 

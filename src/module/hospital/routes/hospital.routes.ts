@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 
 import {
 	MSG_VALIDATION_ID_MONGO,
@@ -7,8 +7,9 @@ import {
 import { HospitalCtrl } from "@modHospital/controllers";
 import { HospitalMap } from "@modHospital/mapping";
 import HospitalMod from "@modHospital/models/hospital.mdl";
-import { existEntity } from "@srcBase/middleware/checkfield.mdw";
+import { checkRoles, existEntity } from "@srcBase/middleware/checkfield.mdw";
 import { checksFields, validateJWT } from "@srcBase/middleware/index";
+import { ROLES } from "@srcBase/secure";
 import { check } from "express-validator";
 
 export class HospitalRoutes {
@@ -28,14 +29,23 @@ export class HospitalRoutes {
 	}
 
 	public setRouter(): Router {
-		this.router.get("/", validateJWT, (req: Request, res: Response) =>
-			this._hospitalCtrl.getAll(req, res)
+		this.router.get(
+			"/",
+			[
+				validateJWT,
+				(req: Request, res: Response, next: NextFunction) =>
+					checkRoles(req, res, next, ROLES.NEW_USER),
+				checksFields,
+			],
+			(req: Request, res: Response) => this._hospitalCtrl.getAll(req, res)
 		);
 
 		this.router.post(
 			"/",
 			[
 				validateJWT,
+				(req: Request, res: Response, next: NextFunction) =>
+					checkRoles(req, res, next, ROLES.NEW_USER),
 				check("name", MSG_VALIDATION_MDW_NAME).notEmpty(),
 				// check("author", MSG_VALIDATION_ID_MONGO).isMongoId(),
 				// check("author").custom((val) => existEntity(val, UserMod)),
@@ -49,6 +59,8 @@ export class HospitalRoutes {
 			"/:_id",
 			[
 				validateJWT,
+				(req: Request, res: Response, next: NextFunction) =>
+					checkRoles(req, res, next, ROLES.ADMIN),
 				check("_id", MSG_VALIDATION_ID_MONGO).isMongoId(),
 				check("_id").custom((val) => existEntity(val, HospitalMod)),
 				check("name", MSG_VALIDATION_MDW_NAME).optional().notEmpty(),
@@ -62,6 +74,8 @@ export class HospitalRoutes {
 			"/:_id",
 			[
 				validateJWT,
+				(req: Request, res: Response, next: NextFunction) =>
+					checkRoles(req, res, next, ROLES.ADMIN),
 				check("_id", MSG_VALIDATION_ID_MONGO).isMongoId(),
 				check("_id").custom((val) => existEntity(val, HospitalMod)),
 				checksFields,
