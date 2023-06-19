@@ -38,3 +38,7 @@ export const MSG_NOT_PERMISSION = "Acción no permitida";
 export const PFS_ID: string = "el identificador";
 export const MSG_TXT_ERR: Function = (error: any): string =>
 	error.message ? error.message : "¡Error, contacte al administrador!";
+
+export const MSG_UPDATE_IMG = "¡Imagen cargada!";
+export const MSG_NOT_VALID_FILE = "Este archivo no es valido para cargar";
+export const MSG_NOT_FILES = "No se enviarón archivos.";

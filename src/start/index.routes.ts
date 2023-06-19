@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { DoctorRoutes } from "@modDoctor/routes";
+import { UploadsRouter } from "@modUploads/routes";
 import { HospitalRoutes } from "../module/hospital/routes/index";
 import { LoginRoutes } from "../module/login/routes/index";
 import UserRouter from "../module/users/routes/user.routes";
@@ -22,6 +23,7 @@ export class AppRouter {
 		this._appRouter.use("/login", LoginRoutes.instance.setRouter());
 		this._appRouter.use("/hospital", HospitalRoutes.instance.setRouter());
 		this._appRouter.use("/doctor", DoctorRoutes.instance.setRouter());
+		this._appRouter.use("/uploads", UploadsRouter.instance.setRouter());
 		return this._appRouter;
 	}
 }
