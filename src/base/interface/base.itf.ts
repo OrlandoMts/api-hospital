@@ -34,3 +34,8 @@ export interface BaseEntityItf {
 	created?: Date;
 	updated?: Date;
 }
+
+export type FileSavedType = {
+	uuidname: string;
+	pathserver: string;
+};

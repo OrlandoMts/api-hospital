@@ -42,3 +42,5 @@ export const MSG_TXT_ERR: Function = (error: any): string =>
 export const MSG_UPDATE_IMG = "¡Imagen cargada!";
 export const MSG_NOT_VALID_FILE = "Este archivo no es valido para cargar";
 export const MSG_NOT_FILES = "No se enviarón archivos.";
+
+export const MSG_NOT_VALID_OPTION = "Opción no valida";
