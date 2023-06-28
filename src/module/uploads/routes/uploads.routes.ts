@@ -55,6 +55,14 @@ export class UploadsRouter {
 			(req: Request, res: Response) =>
 				this._uploadCtrl.uploadImgIn(req, res, "doctors")
 		);
+		this.router.get(
+			"/:folder/:_id",
+			[
+				validateJWT,
+			],
+			(req: Request, res: Response) =>
+				this._uploadCtrl.getImage(req, res)
+		);
 
 		return this.router;
 	}

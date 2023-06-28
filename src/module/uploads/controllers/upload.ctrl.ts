@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import path from "path";
+import fs from "fs"
 
 import { UploadedFile } from "express-fileupload";
 
@@ -76,6 +78,13 @@ export class UploadCtrl {
 		} catch (error: any) {
 			return HttpApiResponse<{}>(false, res, 500, error);
 		}
+	}
+
+	public getImage(req: Request, res: Response) {
+		const { folder, _id } = req.params;
+		const img = path.join(__dirname, `../../../uploads/${folder}/`, _id);
+		const notimg = path.join(__dirname, "../../../uploads/not-found.png");
+		fs.existsSync(img) ? res.sendFile(img) : res.sendFile(notimg)
 	}
 }
 
